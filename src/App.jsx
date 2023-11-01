@@ -18,13 +18,10 @@ const FollowMouse = () => {
 
   useEffect(() => {
     // console.log("effect ", { enabled })
-
     if (enabled) {
       window.addEventListener("pointermove", handleMove)
       // en la consola paso esto getEventListeners(window) para ver cuantas veces nos suscribimos a un evento
-
     }
-
 
     // cleanup
     // se ejecuta cuando se desmonta el componente
@@ -38,6 +35,14 @@ const FollowMouse = () => {
   }, [enabled])
 
 
+  useEffect(() => {
+    document.body.classList.toggle("no-cursor", enabled)
+  
+    return () => {
+      document.body.classList.remove("no-cursor", !enabled)
+    }
+  }, [enabled])
+  
 
 
   return (<><div style={{
@@ -52,7 +57,7 @@ const FollowMouse = () => {
     width: 50,
     height: 50,
     transform: `translate(${position.x}px, ${position.y}px)`
-  }}>PENE</div>
+  }}></div>
     <button onClick={() => setEnabled(!enabled)}>{enabled ? "Desactivar" : "Activar"} seguir puntero</button>
   </>)
 }
